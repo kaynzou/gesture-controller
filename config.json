@@ -1,0 +1,6 @@
+{
+  "camera": { "width": 480, "height": 360 },
+  "gesture_thresholds": { "min_dist": 25, "max_dist": 200 },
+  "menu": { "dwell_seconds": 2.0 },
+  "gestures_mode": { "left_zone_frac": 0.38, "right_zone_frac": 0.62 }
+}
