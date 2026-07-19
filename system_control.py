@@ -82,9 +82,7 @@ def get_brightness() -> int:
         return 50
 
 
-# ---- Brightness via real keyboard keys (works reliably on Apple Silicon) ----
-# macOS brightness-up/down are keyboard hardware keys under the hood.
-# key code 144 = brightness up, 145 = brightness down (standard Mac keyboard codes).
+
 
 def nudge_brightness(direction: str):
     """direction: 'up' or 'down'. Simulates pressing the physical brightness key."""
@@ -108,7 +106,6 @@ def press_arrow(direction):
     pyautogui.press(direction)
 
 
-# ---- App switcher: open + hold, step left/right, confirm with a fist ----
 
 _switcher_active = False
 
