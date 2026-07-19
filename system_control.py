@@ -61,6 +61,9 @@ def set_mute(muted: bool):
 
 
 def set_brightness(percent: int):
+    """Kept for compatibility -- on Apple Silicon internal displays this
+    is unreliable, so brightness is actually controlled via
+    nudge_brightness() below using real keyboard brightness keys instead."""
     if not BRIGHTNESS_AVAILABLE:
         return
     percent = max(0, min(100, int(percent)))
@@ -77,6 +80,19 @@ def get_brightness() -> int:
         return sbc.get_brightness()[0]
     except Exception:
         return 50
+
+
+# ---- Brightness via real keyboard keys (works reliably on Apple Silicon) ----
+# macOS brightness-up/down are keyboard hardware keys under the hood.
+# key code 144 = brightness up, 145 = brightness down (standard Mac keyboard codes).
+
+def nudge_brightness(direction: str):
+    """direction: 'up' or 'down'. Simulates pressing the physical brightness key."""
+    code = "144" if direction == "up" else "145"
+    subprocess.run(
+        ["osascript", "-e", f"tell application \"System Events\" to key code {code}"],
+        check=False,
+    )
 
 
 def minimize_window():

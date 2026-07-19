@@ -93,6 +93,8 @@ def main():
     zone_state = "center"
     vol_percent = sysctl.get_volume()
     bright_percent = sysctl.get_brightness()
+    bright_last_percent = None
+    BRIGHTNESS_STEP_THRESHOLD = 6  # pinch-distance % change needed before nudging brightness
     last_arrow_zone = None
 
     while True:
@@ -203,10 +205,18 @@ def main():
                     cv2.putText(img, f'Vol: {vol_percent}%', (10, 460),
                                 cv2.FONT_HERSHEY_COMPLEX, 0.7, (255, 0, 0), 2)
                 else:
-                    bright_percent = percent
-                    sysctl.set_brightness(bright_percent)
-                    cv2.putText(img, f'Bri: {bright_percent}%', (10, 460),
-                                cv2.FONT_HERSHEY_COMPLEX, 0.7, (0, 165, 255), 2)
+                    # Apple Silicon internal displays don't support setting
+                    # an exact brightness percent -- nudge up/down instead,
+                    # using the real keyboard brightness keys.
+                    if bright_last_percent is not None:
+                        delta = percent - bright_last_percent
+                        if abs(delta) >= BRIGHTNESS_STEP_THRESHOLD:
+                            sysctl.nudge_brightness("up" if delta > 0 else "down")
+                            bright_last_percent = percent
+                    else:
+                        bright_last_percent = percent
+                    cv2.putText(img, f'Bri (relative): pinch wider=brighter, narrower=dimmer', (10, 460),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 165, 255), 2)
 
         cv2.putText(img, f"Mode: {state}  (m: menu, q: quit)", (10, 30),
                     cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 0), 2)
