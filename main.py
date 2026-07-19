@@ -205,9 +205,7 @@ def main():
                     cv2.putText(img, f'Vol: {vol_percent}%', (10, 460),
                                 cv2.FONT_HERSHEY_COMPLEX, 0.7, (255, 0, 0), 2)
                 else:
-                    # Apple Silicon internal displays don't support setting
-                    # an exact brightness percent -- nudge up/down instead,
-                    # using the real keyboard brightness keys.
+
                     if bright_last_percent is not None:
                         delta = percent - bright_last_percent
                         if abs(delta) >= BRIGHTNESS_STEP_THRESHOLD:
