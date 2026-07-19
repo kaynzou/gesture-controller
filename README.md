@@ -99,5 +99,6 @@ If `config.json` is missing or has a typo, the app falls back to built-in defaul
 - **Menu**: hover index fingertip over G / R / V / B / X for 2s to select a mode.
 - **Gestures (G)**: fist = minimize window. Open palm = open app switcher (holds Cmd). While switcher is open, move hand left/right past the blue guide lines to step through apps. Fist again = confirm.
 - **Remote (R)**: move whole hand to screen edges (left/right/up/down) for arrow key presses. Good for turn-based browser games like 2048.
-- **Volume (V)** / **Brightness (B)**: pinch thumb + index finger together/apart.
+- **Volume (V)**: pinch thumb + index finger together/apart for exact 0-100% control.
+- **Brightness (B)**: pinch thumb + index finger -- widening the gap brightens, narrowing dims. This is relative (step-based) rather than exact percentage, because Apple Silicon internal displays don't support programmatic exact brightness control -- this mode simulates the real keyboard brightness keys instead.
 - Press `m` anytime to return to the menu, `q` to quit.
